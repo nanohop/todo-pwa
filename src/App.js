@@ -56,7 +56,7 @@ class App extends Component {
         <nav className="navbar navbar-light bg-light">
           <span className="navbar-brand mb-0 h1">
             <img src={logo} className="App-logo" alt="logo" />
-            Todo List
+            My Todo List
           </span>
         </nav>
 
