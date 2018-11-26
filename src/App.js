@@ -7,7 +7,8 @@ class App extends Component {
   state = {
     items: [],
     loading: true,
-    todoItem: ''
+    todoItem: '',
+    offline: !navigator.onLine
   }
 
   componentDidMount() {
@@ -16,6 +17,18 @@ class App extends Component {
     .then(items => {
       this.setState({ items, loading: false })
     })
+
+    window.addEventListener('online', this.setOfflineStatus)
+    window.addEventListener('offline', this.setOfflineStatus)
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('online', this.setOfflineStatus)
+    window.removeEventListener('offline', this.setOfflineStatus)
+  }
+
+  setOfflineStatus = () => {
+    this.setState({ offline: !navigator.onLine })
   }
 
   addItem = (e) => {
@@ -58,6 +71,13 @@ class App extends Component {
             <img src={logo} className="App-logo" alt="logo" />
             Todo List
           </span>
+
+          {
+            this.state.offline &&
+            <span className="badge badge-danger my-3">
+              Offline
+            </span>
+          }
         </nav>
 
         <div className="px-3 py-2">
