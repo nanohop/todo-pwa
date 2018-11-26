@@ -9,4 +9,9 @@ workbox.routing.registerRoute(
   })
 )
 
+workbox.routing.registerRoute(
+  new RegExp('http://.*:4567.*\.json'),
+  workbox.strategies.networkFirst()
+)
+
 workbox.precaching.precacheAndRoute(self.__precacheManifest || [])
