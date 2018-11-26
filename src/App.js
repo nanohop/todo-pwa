@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
+const ITEMS_URL = 'http://[YOUR_IP]:4567/items.json'
+
 class App extends Component {
 
   state = {
@@ -12,7 +14,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    fetch('http://localhost:4567/items.json')
+    fetch(ITEMS_URL)
     .then(response => response.json())
     .then(items => {
       this.setState({ items, loading: false })
@@ -34,7 +36,7 @@ class App extends Component {
   addItem = (e) => {
     e.preventDefault()
 
-    fetch('http://localhost:4567/items.json', {
+    fetch(ITEMS_URL, {
       method: 'POST',
       body: JSON.stringify({ item: this.state.todoItem }),
       headers:{
@@ -54,7 +56,7 @@ class App extends Component {
   }
 
   deleteItem = (itemId) => {
-    fetch('http://localhost:4567/items.json', {
+    fetch(ITEMS_URL, {
       method: 'DELETE',
       body: JSON.stringify({ id: itemId }),
       headers:{
