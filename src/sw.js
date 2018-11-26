@@ -1,0 +1,4 @@
+
+workbox.skipWaiting()
+workbox.clientsClaim()
+
