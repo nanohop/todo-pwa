@@ -8,7 +8,23 @@ import './App.css';
 import GreyProfile from './grey_profile.png'
 import Back from './back.png'
 
-const ITEMS_URL = "http://192.168.86.51:4567/items.json"
+// const ITEMS_URL = "http://[YOUR LOCAL IP ADDRESS]:4567/items.json"
+const ITEMS_URL = "http://localhost:4567/items.json"
+
+function urlB64ToUint8Array(base64String) {
+  const padding = '='.repeat((4 - base64String.length % 4) % 4);
+  const base64 = (base64String + padding)
+    .replace(/\-/g, '+')
+    .replace(/_/g, '/');
+
+  const rawData = window.atob(base64);
+  const outputArray = new Uint8Array(rawData.length);
+
+  for (let i = 0; i < rawData.length; ++i) {
+    outputArray[i] = rawData.charCodeAt(i);
+  }
+  return outputArray;
+}
 
 class Profile extends Component {
 
@@ -45,6 +61,26 @@ class Profile extends Component {
     this.setState({
       image: this._canvas.toDataURL(),
       enableCamera: false
+    })
+  }
+
+  subscribe = () => {
+    const key = "BDk-kDxLswQMajg9TJqpb9VFTjQeQmS0FE_rTVJ4f9G-v9GFkzcDt-vYkvz5dVkbCfrGmJeLTbvuNUKpOUojWB4"
+
+    global.registration.pushManager.subscribe({
+      userVisibleOnly: true,
+      applicationServerKey: urlB64ToUint8Array(key)
+    }).then(sub => {
+      console.log("Subscribed!")
+    }).catch(err => {
+      console.log("Did not subscribe.")
+    })
+
+  }
+
+  testPushMessage = () => {
+    global.registration.showNotification('Test Message', {
+      body: 'Success!'
     })
   }
 
@@ -105,6 +141,15 @@ class Profile extends Component {
               Toggle Camera
             </button>
           }
+
+          <br />
+          <button onClick={this.subscribe}>Subscribe for Notifications</button>
+
+          <br />
+          <button
+            onClick={this.testPushMessage}
+          >Test Push Message</button>
+
         </div>
 
       </div>
@@ -276,3 +321,4 @@ export default () =>
     </div>
   </Router>
 
+git
