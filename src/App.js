@@ -8,7 +8,8 @@ import './App.css';
 import GreyProfile from './grey_profile.png'
 import Back from './back.png'
 
-const ITEMS_URL = "http://192.168.86.51:4567/items.json"
+// const ITEMS_URL = "http://[YOUR LOCAL IP ADDRESS]:4567/items.json"
+const ITEMS_URL = "http://localhost:4567/items.json"
 
 class Profile extends Component {
 
